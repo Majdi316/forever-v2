@@ -1,0 +1,12 @@
+Auto logout on inactivity users
+
+
+
+
+echo "# forever-v2" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Majdi316/forever-v2.git
+git push -u origin main
