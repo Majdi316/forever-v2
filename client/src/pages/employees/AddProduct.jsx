@@ -1,11 +1,29 @@
+//TODO Libraries
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Joi from "joi";
+//TODO Context
 import { UserContext } from "../../context/UserContext";
+//TODO Theme
+import { customTextFieldStyles } from "../../helper/styeTextInput";
+import { DARK_MODE, LIGHT_MODE } from "../../theme/themeData";
+//TODO MUI Components
+import { Button, TextField } from "@mui/material";
 
 const AddProduct = () => {
-  const { token, backendUrl, navigate } = useContext(UserContext);
+  //TODO Variables
+  const {
+    token,
+    backendUrl,
+    navigate,
+    paperTheme,
+    titleTheme,
+    theme,
+    buttonTheme,
+    setProducts,
+  } = useContext(UserContext);
+  //TODO States
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -18,7 +36,7 @@ const AddProduct = () => {
     image: [{ url: "", alt: "product image" }],
   });
   const [errors, setErrors] = useState({});
-
+  //TODO Schema
   const schema = Joi.object({
     name: Joi.string().min(2).max(100).required().label("Name"),
     description: Joi.string().min(10).required().label("Description"),
@@ -52,7 +70,7 @@ const AddProduct = () => {
       .required()
       .label("Images"),
   });
-
+  //TODO Function
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (name === "sizes") {
@@ -138,17 +156,21 @@ const AddProduct = () => {
       });
       if (response.data.success) {
         toast.success(response.data.message);
+        // update the products in global state products in context
+         setProducts((prev) => [...prev, response.data.data]);
         navigate("/");
-        window.location.reload();
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Server error");
+      toast.error(error.response?.data?.message);
     }
   };
-
+  //TODO Return
   return (
-    <div className="p-4 sm:p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center sm:text-left">
+    <div style={paperTheme} className="p-4 sm:p-6 max-w-4xl mx-auto">
+      <h1
+        style={titleTheme}
+        className="text-2xl sm:text-3xl font-bold mb-6 text-center sm:text-left"
+      >
         Add New Product
       </h1>
       <form
@@ -157,55 +179,50 @@ const AddProduct = () => {
       >
         {/* Name */}
         <div className="sm:col-span-2">
-          <input
+          <TextField
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
             type="text"
             name="name"
-            placeholder="Product Name"
-            className={`border p-2 rounded w-full ${
-              errors.name ? "border-red-500" : ""
-            }`}
+            label="Product Name"
+            variant="outlined"
+            error={!!errors.name}
+            helperText={errors.name}
             value={form.name}
             onChange={handleChange}
+            fullWidth
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-          )}
         </div>
-
         {/* Description */}
-        <div className="sm:col-span-2">
-          <textarea
+        <div className="sm:col-span-2 w-full">
+          <TextField
+            type="text"
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
+            variant="outlined"
             name="description"
-            placeholder="Description"
-            className={`border p-2 rounded w-full ${
-              errors.description ? "border-red-500" : ""
-            }`}
+            label="Description"
+            error={!!errors.description}
+            helperText={errors.description}
             value={form.description}
             onChange={handleChange}
-            rows={4}
+            fullWidth
+            multiline
+            maxRows={5}
           />
-          {errors.description && (
-            <p className="text-red-500 text-sm mt-1">{errors.description}</p>
-          )}
         </div>
-
         {/* Price */}
         <div>
-          <input
+          <TextField
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
             type="number"
             name="price"
-            placeholder="Price"
-            className={`border p-2 rounded w-full ${
-              errors.price ? "border-red-500" : ""
-            }`}
+            label="Price"
+            fullWidth
             value={form.price}
             onChange={handleChange}
+            error={!!errors.price}
+            helperText={errors.price}
           />
-          {errors.price && (
-            <p className="text-red-500 text-sm mt-1">{errors.price}</p>
-          )}
         </div>
-
         {/* Category */}
         <div>
           <select
@@ -224,7 +241,6 @@ const AddProduct = () => {
             <p className="text-red-500 text-sm mt-1">{errors.category}</p>
           )}
         </div>
-
         {/* SubCategory */}
         <div>
           <select
@@ -243,10 +259,11 @@ const AddProduct = () => {
             <p className="text-red-500 text-sm mt-1">{errors.subCategory}</p>
           )}
         </div>
-
         {/* Sizes */}
         <div className="sm:col-span-2">
-          <p className="font-semibold mb-2">Sizes</p>
+          <p style={titleTheme} className="font-semibold mb-2">
+            Sizes
+          </p>
           <div className="flex flex-wrap gap-4">
             {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
               <label key={size} className="flex items-center">
@@ -265,11 +282,12 @@ const AddProduct = () => {
             <p className="text-red-500 text-sm mt-1">{errors.sizes}</p>
           )}
         </div>
-
         {/* Images */}
         <div className="sm:col-span-2">
-          <p className="font-semibold mb-2">Images</p>
-          <div className="flex flex-col gap-2">
+          <p style={titleTheme} className="font-semibold mb-2">
+            Images
+          </p>
+          <div className="flex flex-col gap-2 w-full">
             {form.image.map((img, index) => (
               <div
                 key={index}
@@ -300,13 +318,14 @@ const AddProduct = () => {
               </div>
             ))}
           </div>
-          <button
+          <Button
+            className=" w-full sm:w-1/3"
+            sx={{ ...buttonTheme, marginTop: "15px" }}
             type="button"
             onClick={addImageField}
-            className="bg-gray-200 px-4 py-1 rounded mt-2"
           >
             + Add Image
-          </button>
+          </Button>
         </div>
 
         {/* Bestseller */}
@@ -340,13 +359,10 @@ const AddProduct = () => {
         </div>
 
         {/* Submit */}
-        <div className="sm:col-span-2">
-          <button
-            type="submit"
-            className="bg-black text-white py-2 rounded w-full hover:bg-gray-800 transition"
-          >
+        <div className="sm:col-span-2 w-full">
+          <Button className=" w-full sm:w-1/3" sx={buttonTheme} type="submit">
             Add Product
-          </button>
+          </Button>
         </div>
       </form>
     </div>

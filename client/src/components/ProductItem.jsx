@@ -15,8 +15,14 @@ const ProductItem = ({ product }) => {
   //TODO States
   const [liked, setLiked] = useState(false);
   //TODO Variables
-  const { userFullDetails, backendUrl, token } = useContext(UserContext);
-  const { theme } = useContext(UserContext);
+  const {
+    userFullDetails,
+    backendUrl,
+    token,
+    toggleProductLikeInContext,
+    theme,
+    user,
+  } = useContext(UserContext);
   const navigate = useNavigate();
   const isSoldOut = product.status.toLowerCase() === "Sold-Out".toLowerCase();
   const isComingSoon =
@@ -36,6 +42,8 @@ const ProductItem = ({ product }) => {
       );
       if (response.data.success) {
         toast.success(response.data.message);
+        // UPDATE GLOBAL PRODUCTS IN CONTEXT
+        toggleProductLikeInContext(productId, userFullDetails._id);
         setLiked((prev) => !prev);
       }
     } catch (error) {
@@ -44,9 +52,7 @@ const ProductItem = ({ product }) => {
   };
   // Navigate to product page
   const goToProductPage = () => {
-    if (!isSoldOut) {
-      navigate(`/products/product-info/${product._id}`);
-    }
+    navigate(`/products/product-info/${product._id}`);
   };
 
   // Calculate discounted price if user is subscribed
@@ -70,8 +76,8 @@ const ProductItem = ({ product }) => {
       }}
       className={`
         relative  rounded-xl shadow-md overflow-hidden
-        hover:shadow-xl transition-shadow duration-300
-        ${isSoldOut ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}
+        hover:shadow-xl transition-shadow duration-300 cursor-pointer
+        ${isSoldOut ? "opacity-40" : ""}
       `}
     >
       {/* Product Image */}
@@ -97,21 +103,24 @@ const ProductItem = ({ product }) => {
             SOLD OUT
           </span>
         )}
-         {isComingSoon && (
+        {isComingSoon && (
           <span className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
             COMING SOON
           </span>
         )}
-
-        {/* Like Button */}
-        <button
-          onClick={(e) => toggleLike(e, product._id)}
-          disabled={isSoldOut}
-          className={`absolute top-2 right-2 text-white bg-black bg-opacity-30 p-2 rounded-full transition
+        {!user ? null : (
+          <>
+            {/* Like Button */}
+            <button
+              onClick={(e) => toggleLike(e, product._id)}
+              disabled={isSoldOut}
+              className={`absolute top-2 right-2 text-white bg-black bg-opacity-30 p-2 rounded-full transition
             ${!isSoldOut ? "hover:bg-opacity-50" : "cursor-not-allowed"}`}
-        >
-          {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
-        </button>
+            >
+              {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
+            </button>
+          </>
+        )}
       </div>
 
       {/* Product Info */}
@@ -141,15 +150,13 @@ const ProductItem = ({ product }) => {
         <div className="mt-2">
           {discountedPrice ? (
             <div className="flex items-center gap-2">
-              <span className="line-through">${product.price.toFixed(2)}</span>
+              <span className="line-through">${product.price}</span>
               <span className="text-green-600 dark:text-green-400 font-bold text-lg">
                 ${discountedPrice}
               </span>
             </div>
           ) : (
-            <span className=" font-bold text-lg">
-              ${product.price.toFixed(2)}
-            </span>
+            <span className=" font-bold text-lg">${product.price}</span>
           )}
         </div>
 

@@ -8,6 +8,7 @@ import {
 } from "../controller/productController.js";
 import { verifyAuthToken } from "../auth/verifyAuthToken.js";
 import { updateUserActivity } from "../middleware/updateActivity.js";
+import { updateProductController } from "../controller/updateProductController.js";
 //TODO Controllers
 
 // Create the router
@@ -30,5 +31,12 @@ productRouter.patch(
   updateUserActivity,
   toggleLikeController
 );
+//todo --------------------- PUT ----------------------------
 
+productRouter.put(
+  "/update/:id",
+  verifyAuthToken,
+  updateUserActivity,
+  updateProductController
+);
 export default productRouter;

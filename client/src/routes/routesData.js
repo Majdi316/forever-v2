@@ -18,6 +18,7 @@ const ROUTES = {
   orders: "/user/my-orders",
   // ------------- employees routes ----------
   addNewProduct: "/employees/add-new-product",
+  updateProduct:"/employee/update-product/:id",
   // ------------- manager routes ----------
   dashboard: "/manager/dashboard",
   createHeroSection: "/manager/create-hero-section",

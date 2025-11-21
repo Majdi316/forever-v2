@@ -23,6 +23,7 @@ import Verify from "../pages/users/Verify";
 import Orders from "../pages/users/Orders";
 import ManageOrders from "../pages/manager/ManageOrders";
 import AddProduct from "../pages/employees/AddProduct";
+import UpdateProduct from "../components/employee/UpdateProduct";
 //TODO Main Function
 const Router = () => {
   //TODO Return
@@ -47,6 +48,7 @@ const Router = () => {
       <Route path={ROUTES.orders} element={<Orders />} />
       {/* ----------- EMPLOYEES ROUTES ------------  */}
       <Route path={ROUTES.addNewProduct} element={<AddProduct />} />
+      <Route path={ROUTES.updateProduct} element={<UpdateProduct />} />
       {/* ----------- MANAGER ROUTES ------------  */}
       <Route path={ROUTES.dashboard} element={<Dashboard />} />
       <Route path={ROUTES.updateHeroSection} element={<UpdateHeroForm />} />

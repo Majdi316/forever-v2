@@ -112,7 +112,7 @@ const getAllReviewsForProductController = async (req, res) => {
  * @desc  edit review 
  * @route  /reviews/edit/:id
  * @method  POST
- * @access private (only user that created this post)
+ * @access private (only user that created this review)
  ---------------------------------------------------*/
 const editReviewController = async (req, res) => {
   const { id: reviewId } = req.params;

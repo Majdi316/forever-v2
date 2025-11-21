@@ -158,7 +158,7 @@ const UserContextProvider = (props) => {
           if (cartItems[items][item] > 0) {
             totalAmount += itemInfo.price * cartItems[items][item];
           }
-        // eslint-disable-next-line no-unused-vars, no-empty
+          // eslint-disable-next-line no-unused-vars, no-empty
         } catch (error) {}
       }
     }
@@ -204,6 +204,21 @@ const UserContextProvider = (props) => {
     } catch (error) {
       toast.error(error.response.data.message);
     }
+  };
+  //----------------- Toggle Like  ----------------------
+  const toggleProductLikeInContext = (productId, userId) => {
+    setProducts((prev) =>
+      prev.map((p) =>
+        p._id === productId
+          ? {
+              ...p,
+              likes: p.likes.includes(userId)
+                ? p.likes.filter((id) => id !== userId)
+                : [...p.likes, userId],
+            }
+          : p
+      )
+    );
   };
   //TODO ---------------- useEffect -------------------
   //---------- Fetch products data on mount -----------
@@ -287,6 +302,7 @@ const UserContextProvider = (props) => {
   //TODO ------------- Values ----------------------
   const value = {
     products,
+    setProducts,
     backendUrl,
     token,
     setToken,
@@ -315,6 +331,7 @@ const UserContextProvider = (props) => {
     delivery_fee,
     getCartCount,
     getCartAmount,
+    toggleProductLikeInContext,
   };
   //TODO ------------- Return ----------------------
   return (

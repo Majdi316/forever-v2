@@ -13,7 +13,7 @@ import ProductItem from "./ProductItem";
 //TODO Main Function
 const LatestCollection = () => {
   //TODO Variables
-  const { user, theme, products } = useContext(UserContext);
+  const { user, theme, products, navigate } = useContext(UserContext);
   //TODO States
   const [latestProducts, setLatestProducts] = useState([]);
   //TODO Function
@@ -87,8 +87,8 @@ const LatestCollection = () => {
                   style={{
                     background: DARK_MODE.Accent,
                   }}
-                  className="text-white font-semibold px-4 py-2 rounded shadow"
-                  onClick={() => console.log("Redirect to create product")}
+                  className=" cursor-pointer text-white font-semibold px-4 py-2 rounded shadow"
+                  onClick={() => navigate("/employees/add-new-product")}
                 >
                   Create Product
                 </button>

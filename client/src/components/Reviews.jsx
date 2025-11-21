@@ -165,7 +165,7 @@ const Reviews = () => {
                       />
                     ))}
                   </div>
-                  {user._id !== review.userId ? null : (
+                  {user?._id !== review.userId ? null : (
                     <>
                       {" "}
                       <Button
@@ -177,7 +177,7 @@ const Reviews = () => {
                       </Button>
                     </>
                   )}
-                  {!user.isManager && user._id !== review.userId ? null : (
+                  {!user?.isManager && user?._id !== review?.userId ? null : (
                     <>
                       {" "}
                       <button onClick={() => deleteReview(review._id)}>
@@ -200,68 +200,81 @@ const Reviews = () => {
             </div>
           ))
         ) : (
-          <p style={titleTheme} className="text-center ">No reviews yet.</p>
+          <p style={titleTheme} className="text-center ">
+            No reviews yet.
+          </p>
         )}
       </div>
+      {!user ? (
+        <>
+        <p className=" mt-5 w-full text-center text-yellow-500 font-semibold text-sm sm:text-base bg-yellow-100 px-4 py-2 rounded-md inline-block shadow-sm">
+              ⚠️ Please log in to leave a review.
+              </p>
+        </>
+      ) : (
+        <>
+          {" "}
+          {/* Add/Edit Review Form */}
+          <div className="mt-12 bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+            <h3 className="text-xl font-semibold mb-4 text-gray-800">
+              {editMode ? "Edit Your Review" : "Write a Review"}
+            </h3>
 
-      {/* Add/Edit Review Form */}
-      <div className="mt-12 bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-        <h3 className="text-xl font-semibold mb-4 text-gray-800">
-          {editMode ? "Edit Your Review" : "Write a Review"}
-        </h3>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Rating */}
+              <div>
+                <label className="block font-medium text-gray-700 mb-2">
+                  Your Rating:
+                </label>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((num) => (
+                    <img
+                      key={num}
+                      src={assets.star_icon}
+                      alt="star"
+                      onClick={() => setForm({ ...form, rating: num })}
+                      className={`w-6 sm:w-7 cursor-pointer transition ${
+                        num <= form.rating ? "opacity-100" : "opacity-25"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Rating */}
-          <div>
-            <label className="block font-medium text-gray-700 mb-2">
-              Your Rating:
-            </label>
-            <div className="flex gap-2">
-              {[1, 2, 3, 4, 5].map((num) => (
-                <img
-                  key={num}
-                  src={assets.star_icon}
-                  alt="star"
-                  onClick={() => setForm({ ...form, rating: num })}
-                  className={`w-6 sm:w-7 cursor-pointer transition ${
-                    num <= form.rating ? "opacity-100" : "opacity-25"
-                  }`}
-                />
-              ))}
-            </div>
+              {/* Comment */}
+              <textarea
+                placeholder="Share your experience..."
+                value={form.comment}
+                onChange={(e) => setForm({ ...form, comment: e.target.value })}
+                className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none min-h-[100px] text-gray-700"
+              ></textarea>
+
+              {/* Buttons */}
+              <div className="flex flex-wrap gap-3">
+                <Button
+                  style={buttonTheme}
+                  type="submit"
+                  className=" px-6 py-2 rounded-lg font-medium transition"
+                >
+                  {editMode ? "Update Review" : "Submit Review"}
+                </Button>
+                {editMode && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditMode(false);
+                      setForm({ rating: 0, comment: "" });
+                    }}
+                    className="bg-gray-200 hover:bg-gray-300 text-gray-800 cursor-pointer px-6 py-2 rounded-lg font-medium transition"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </form>
           </div>
-
-          {/* Comment */}
-          <textarea
-            placeholder="Share your experience..."
-            value={form.comment}
-            onChange={(e) => setForm({ ...form, comment: e.target.value })}
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-400 focus:outline-none min-h-[100px] text-gray-700"
-          ></textarea>
-
-          {/* Buttons */}
-          <div className="flex flex-wrap gap-3">
-            <Button style={buttonTheme}
-              type="submit"
-              className=" px-6 py-2 rounded-lg font-medium transition"
-            >
-              {editMode ? "Update Review" : "Submit Review"}
-            </Button>
-            {editMode && (
-              <button
-                type="button"
-                onClick={() => {
-                  setEditMode(false);
-                  setForm({ rating: 0, comment: "" });
-                }}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-800 cursor-pointer px-6 py-2 rounded-lg font-medium transition"
-              >
-                Cancel
-              </button>
-            )}
-          </div>
-        </form>
-      </div>
+        </>
+      )}
     </div>
   );
 };

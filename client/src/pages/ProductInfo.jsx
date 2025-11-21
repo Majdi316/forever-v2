@@ -10,7 +10,6 @@ import { Button } from "@mui/material";
 import Title from "../components/Title";
 import Reviews from "../components/Reviews";
 
-
 const ProductInfo = () => {
   //TODO Variables
   const { id } = useParams();
@@ -22,6 +21,7 @@ const ProductInfo = () => {
     titleTheme,
     paragraphTheme,
     addToCart,
+    user,
   } = useContext(UserContext);
   const isSubscribe = userFullDetails?.isSubscribe;
   //TODO State
@@ -72,7 +72,7 @@ const ProductInfo = () => {
               alt={product.name}
               className="w-full h-[400px] object-fill rounded-2xl"
             />
-            {product.status === "sold out" && (
+            {product.status === "Sold-Out" && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-semibold text-lg">
                 SOLD OUT
               </div>
@@ -101,6 +101,9 @@ const ProductInfo = () => {
           <h2 style={titleTheme} className="text-3xl font-bold">
             {product.name}
           </h2>
+          <p className="text-xl mt-2 opacity-80">
+            ❤️ {product.likes.length} Likes
+          </p>
           <p>{product.description}</p>
 
           <div className="flex items-center gap-4">
@@ -136,20 +139,51 @@ const ProductInfo = () => {
             </div>
           </div>
 
-          {/* Add to Cart / Like */}
-          <div className="flex gap-4 mt-4">
-            <Button
-              onClick={() => addToCart(product._id, selectedSize)}
-              disabled={product.status === "sold out"}
-              sx={{
-                ...buttonTheme,
-                borderRadius: "9999px",
-                padding: "12px 24px",
-              }}
-            >
-              Add to Cart
-            </Button>
-          </div>
+          {/* Add to Cart */}
+          {!user ? (
+            <>
+              <p className=" text-yellow-500 font-semibold text-sm sm:text-base bg-yellow-100 px-4 py-2 rounded-md inline-block shadow-sm">
+                ⚠️ Login is required before you can add a product to the cart.
+              </p>
+            </>
+          ) : (
+            <>
+              {" "}
+              <div className={`flex gap-4 mt-4  `}>
+                <Button
+                  onClick={() => addToCart(product._id, selectedSize)}
+                  disabled={
+                    product.status === "Sold-Out" ||
+                    product.status === "Coming-Soon"
+                  }
+                  sx={{
+                    ...buttonTheme,
+                    borderRadius: "9999px",
+                    padding: "12px 24px",
+                  }}
+                >
+                  Add to Cart
+                </Button>
+                {product?.employee_id === user?._id ? (
+                  <>
+                    {" "}
+                    <Button
+                      onClick={() =>
+                        navigate(`/employee/update-product/${product._id}`)
+                      }
+                      sx={{
+                        ...buttonTheme,
+                        borderRadius: "9999px",
+                        padding: "12px 24px",
+                      }}
+                    >
+                      Edit Product
+                    </Button>
+                  </>
+                ) : null}
+              </div>
+            </>
+          )}
 
           {/* Date */}
           <div className="text-xl italic text-red-500 mt-6 flex items-center gap-1">

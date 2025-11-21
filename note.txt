@@ -1,6 +1,3 @@
-Auto logout on inactivity users
-
-
 
 
 echo "# forever-v2" >> README.md
@@ -10,3 +7,6 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/Majdi316/forever-v2.git
 git push -u origin main
+
+
+https://chatgpt.com/share/691e15fe-6350-8001-8c29-822256e4d101

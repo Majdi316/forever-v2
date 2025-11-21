@@ -53,7 +53,7 @@ const ManageOrders = () => {
 
 //TODO Return
   return (
-    <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
+    <div className="p-4 md:p-8 bg-gray-50 min-h-screen w-full">
       <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-800">
         Manage Orders
       </h2>
