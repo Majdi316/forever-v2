@@ -173,9 +173,61 @@ const toggleLikeController = async (req, res) => {
     });
   }
 };
+/**-------------------------------------------------
+ * @desc  Fetch My Favorite Products
+ * @route  /products/my-favorite/:id
+ * @method  GET
+ * @access private (only registered user)
+ ---------------------------------------------------*/
+const myFavoriteProductsController = async (req, res) => {
+  const { id: userId } = req.params;
+  const loggedInUserId = req.user._id;
+
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    //! Only Registered User can see his favorite products
+    if (userId !== loggedInUserId) {
+      res.status(403).json({
+        success: false,
+        message: "Only registered user can view Favorite products",
+      });
+    }
+    //! Fetch Liked Products
+    const likedProducts = await Product.find({ likes: userId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+    //! check if the user like any products
+    if (likedProducts.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found for this user",
+      });
+    }
+    //! Total product count & total pages
+    const totalProducts = await Product.countDocuments({ likes: userId });
+    const totalPages = Math.ceil(totalProducts / limit);
+    return res.status(200).json({
+      success: true,
+      message: "Liked products fetched successfully",
+      count: totalProducts,
+      products: likedProducts,
+      page,
+      totalPages,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error :" + error.message,
+    });
+  }
+};
 export {
   createProductController,
   getAllProductsController,
   getProductByIdController,
   toggleLikeController,
+  myFavoriteProductsController,
 };

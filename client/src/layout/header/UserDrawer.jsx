@@ -13,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 //TODO Context
 import { UserContext } from "../../context/UserContext";
 import ManagerDrawer from "./ManagerDrawer";
@@ -97,6 +98,32 @@ const UserDrawer = ({ path, navigate, ROUTES, DARK_MODE, user, theme }) => {
             />
           </ListItemIcon>
           <ListItemText primary={`My Orders`} />
+        </ListItemButton>
+      </ListItem>
+       {/*----------------- 3 -------------------*/}
+      <ListItem
+        disablePadding
+        sx={{
+          fontWeight: "bold",
+          bgcolor: path === ROUTES.favorite ? DARK_MODE.Accent : null,
+          color: "white",
+          cursor: "pointer",
+          "&:hover": {
+            background: DARK_MODE.Accent,
+            transition: "background 0.3s ease",
+            opacity: 0.7,
+          },
+        }}
+      >
+        <ListItemButton onClick={() => navigate(`${ROUTES.favorite}`)}>
+          <ListItemIcon>
+            <FavoriteIcon
+              sx={{
+                color: "white",
+              }}
+            />
+          </ListItemIcon>
+          <ListItemText primary={`Favorite`} />
         </ListItemButton>
       </ListItem>
       {/*----------------- Employees Only -------------------*/}

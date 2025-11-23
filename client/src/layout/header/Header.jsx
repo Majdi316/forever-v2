@@ -60,6 +60,12 @@ const Header = ({ drawerWidth }) => {
       case "/employees/add-new-product":
         setPath(ROUTES.addNewProduct);
         break;
+      case "/employee/my-products":
+        setPath(ROUTES.myProducts);
+        break;
+      case "/user/my-favorite/products":
+        setPath(ROUTES.favorite);
+        break;
       default:
     }
   }, [currentLocation]);

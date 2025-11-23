@@ -16,9 +16,11 @@ const ROUTES = {
   placeOrder: "/user/place-order",
   verify: "/verify",
   orders: "/user/my-orders",
+  favorite:"user/my-favorite/products",
   // ------------- employees routes ----------
   addNewProduct: "/employees/add-new-product",
-  updateProduct:"/employee/update-product/:id",
+  updateProduct: "/employee/update-product/:id",
+  myProducts: "/employee/my-products",
   // ------------- manager routes ----------
   dashboard: "/manager/dashboard",
   createHeroSection: "/manager/create-hero-section",

@@ -24,6 +24,8 @@ import Orders from "../pages/users/Orders";
 import ManageOrders from "../pages/manager/ManageOrders";
 import AddProduct from "../pages/employees/AddProduct";
 import UpdateProduct from "../components/employee/UpdateProduct";
+import EmployeeProducts from "../pages/employees/EmployeeProducts";
+import FavoriteProducts from "../pages/users/FavoriteProducts";
 //TODO Main Function
 const Router = () => {
   //TODO Return
@@ -46,9 +48,11 @@ const Router = () => {
       <Route path={ROUTES.placeOrder} element={<PlaceOrder />} />
       <Route path={ROUTES.verify} element={<Verify />} />
       <Route path={ROUTES.orders} element={<Orders />} />
+      <Route path={ROUTES.favorite} element={<FavoriteProducts />} />
       {/* ----------- EMPLOYEES ROUTES ------------  */}
       <Route path={ROUTES.addNewProduct} element={<AddProduct />} />
       <Route path={ROUTES.updateProduct} element={<UpdateProduct />} />
+      <Route path={ROUTES.myProducts} element={<EmployeeProducts />} />
       {/* ----------- MANAGER ROUTES ------------  */}
       <Route path={ROUTES.dashboard} element={<Dashboard />} />
       <Route path={ROUTES.updateHeroSection} element={<UpdateHeroForm />} />

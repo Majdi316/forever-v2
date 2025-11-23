@@ -8,6 +8,7 @@ import productRouter from "./productRoute.js";
 import cartRouter from "./cartRouter.js";
 import orderRouter from "./orderRoute.js";
 import reviewRouter from "./reviewRoute.js";
+import employeeRouter from "./employeeRoute.js";
 
 //create router
 const router = express.Router();
@@ -19,6 +20,9 @@ router.use("/products", productRouter);
 router.use("/cart", cartRouter);
 router.use("/order", orderRouter); 
 router.use("/reviews", reviewRouter);
+router.use("/employee", employeeRouter);
+
+
 router.use((req, res) => {
   res.status(404).send("Page Not Found");
 });

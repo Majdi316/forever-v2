@@ -51,7 +51,7 @@ export const updateProductController = async (req, res) => {
     product.status = status ?? product.status;
     product.bestseller = bestseller ?? product.bestseller;
 
-    // Images (must be array of `{url, alt}`)
+    //! Images (must be array of `{url, alt}`)
     if (image) product.image = image;
 
     await product.save();

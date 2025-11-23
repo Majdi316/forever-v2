@@ -52,7 +52,7 @@ const ProductInfo = () => {
   //TODO Return
   return (
     <div
-      className={`max-w-7xl mx-auto px-6 py-10 min-h-screen transition-all duration-300`}
+      className={`max-w-7xl mx-auto w-full px-6 py-10 min-h-screen transition-all duration-300`}
     >
       {/* Title */}
       <div className="text-center mb-10 text-2xl sm:text-3xl font-bold">
