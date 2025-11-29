@@ -193,7 +193,7 @@ const Reviews = () => {
               {/* Comment */}
               <p
                 style={titleTheme}
-                className=" leading-relaxed border-l-4 border-blue-500 pl-3 ml-1"
+                className="w-full leading-relaxed border-l-4 border-blue-500 pl-3 ml-1 break-words whitespace-pre-wrap"
               >
                 {review.comment}
               </p>
@@ -207,9 +207,9 @@ const Reviews = () => {
       </div>
       {!user ? (
         <>
-        <p className=" mt-5 w-full text-center text-yellow-500 font-semibold text-sm sm:text-base bg-yellow-100 px-4 py-2 rounded-md inline-block shadow-sm">
-              ⚠️ Please log in to leave a review.
-              </p>
+          <p className=" mt-5 w-full text-center text-yellow-500 font-semibold text-sm sm:text-base bg-yellow-100 px-4 py-2 rounded-md inline-block shadow-sm">
+            ⚠️ Please log in to leave a review.
+          </p>
         </>
       ) : (
         <>

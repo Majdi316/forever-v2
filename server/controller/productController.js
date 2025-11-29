@@ -182,13 +182,14 @@ const toggleLikeController = async (req, res) => {
 const myFavoriteProductsController = async (req, res) => {
   const { id: userId } = req.params;
   const loggedInUserId = req.user._id;
+  const user = req.user;
 
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-    //! Only Registered User can see his favorite products
-    if (userId !== loggedInUserId) {
+    //! Only Registered User & Manager can see his favorite products
+    if (!user.isManager && userId !== loggedInUserId) {
       res.status(403).json({
         success: false,
         message: "Only registered user can view Favorite products",

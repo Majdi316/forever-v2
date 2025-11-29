@@ -27,6 +27,7 @@ const EmployeeProducts = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [totalProducts, setTotalProducts] = useState(0);
   //TODO Variables
   const {
     backendUrl,
@@ -51,6 +52,7 @@ const EmployeeProducts = () => {
       setMyProducts(res.data.products);
       setPage(res.data.page);
       setTotalPages(res.data.totalPages);
+      setTotalProducts(res.data.totalProducts);
     } catch (error) {
       toast.error(error.response?.data?.message || "Error loading products");
     } finally {
@@ -69,6 +71,9 @@ const EmployeeProducts = () => {
   };
   //TODO useEffect
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  useEffect(() => {
     fetchProducts(page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
@@ -82,7 +87,7 @@ const EmployeeProducts = () => {
         textAlign={{ xs: "center", md: "left" }}
         sx={titleTheme}
       >
-        My Products
+        My Products - {totalProducts}
       </Typography>
 
       {/* Skeleton Loader */}
@@ -115,7 +120,8 @@ const EmployeeProducts = () => {
               lg={3}
             >
               <BlurIn>
-                <div className=" w-full"
+                <div
+                  className=" w-full"
                   onClick={() =>
                     navigate(`/products/product-info/${product._id}`)
                   }
@@ -127,7 +133,7 @@ const EmployeeProducts = () => {
                       boxShadow: 3,
                       borderRadius: 3,
                       height: "100%",
-                      width:"100%",
+                      width: "100%",
                       transition: "0.2s",
                       "&:hover": { transform: "scale(1.03)" },
                       cursor: "pointer",

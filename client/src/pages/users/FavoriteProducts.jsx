@@ -1,9 +1,11 @@
+//TODO Libraries
 import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
-import { UserContext } from "../../context/UserContext";
 import { toast } from "react-toastify";
 import axios from "axios";
+//TODO Context
+import { UserContext } from "../../context/UserContext";
 //TODO MUI Components
 import {
   Box,
@@ -14,16 +16,20 @@ import {
   CardMedia,
   Divider,
   Button,
-  Rating,
 } from "@mui/material";
+//TODO Components
 import ProductSkeleton from "../../components/employee/ProductSkeleton";
 import BlurIn from "../../components/employee/BlurIn";
+//TODO Theme
+import { DARK_MODE } from "../../theme/themeData";
 const FavoriteProducts = () => {
   //TODO States
   const [myProducts, setMyProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [totalProducts, setTotalProducts] = useState(0);
+
   //TODO Variables
   const {
     backendUrl,
@@ -34,8 +40,10 @@ const FavoriteProducts = () => {
     titleTheme,
     theme,
     buttonTheme,
+    userFullDetails,
   } = useContext(UserContext);
   const limit = 3;
+  //TODO Functions
   const fetchProducts = async (pageNumber = 1) => {
     try {
       setLoading(true);
@@ -46,16 +54,14 @@ const FavoriteProducts = () => {
       setMyProducts(res.data.products);
       setPage(res.data.page);
       setTotalPages(res.data.totalPages);
+      setTotalProducts(res.data.count);
     } catch (error) {
       toast.error(error.response?.data?.message || "Error loading products");
     } finally {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchProducts(page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
+
   //---------------------------------
   const handlePrev = () => {
     window.scrollTo(0, 0);
@@ -67,9 +73,13 @@ const FavoriteProducts = () => {
     page < totalPages && setPage((p) => p + 1);
   };
   //TODO useEffect
-
-  console.log(page);
-  console.log(loading);
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+  },[])
+  useEffect(() => {
+    fetchProducts(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
   return (
     <Box sx={{ padding: { xs: 2, md: 4 } }}>
       <Typography
@@ -79,7 +89,7 @@ const FavoriteProducts = () => {
         textAlign={{ xs: "center", md: "left" }}
         sx={titleTheme}
       >
-        My Products
+        Favorite Products - {totalProducts}
       </Typography>
 
       {/* Skeleton Loader */}
@@ -161,9 +171,32 @@ const FavoriteProducts = () => {
                           {product.status}
                         </p>
                       </div>
-                      <Typography color="gray" mt={0.5}>
-                        ${product.price}
-                      </Typography>
+                      {/* Price */}
+                      {userFullDetails.isSubscribe ? (
+                        <>
+                          <div className=" flex items-center justify-between mt-3">
+                            <div className=" flex gap-2 items-center">
+                              <span className="line-through">
+                                ${product.price}
+                              </span>
+                              <span className="text-green-600 dark:text-green-400 font-bold text-lg">
+                                ${product.price * 0.8}
+                              </span>
+                            </div>
+                            <p>💘 {product.likes.length}</p>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <div className=" flex items-center justify-between">
+                            <Typography color="gray" mt={0.5}>
+                              ${product.price}
+                            </Typography>
+                            <p>💘 {product.likes.length}</p>
+                          </div>
+                        </>
+                      )}
 
                       <Divider
                         sx={{
@@ -172,25 +205,27 @@ const FavoriteProducts = () => {
                         }}
                       />
 
-                      <Typography variant="body2">
-                        Reviews: {product.reviewCount}
-                      </Typography>
+                      <p>
+                        {product.category}/{product.subCategory}
+                      </p>
 
-                      <Rating
-                        className=" rounded-2xl bg-amber-50 p-1 my-1"
-                        name="read-only"
-                        value={product.averageRating}
-                        readOnly
-                        precision={0.5}
-                        size="small"
-                      />
-                      <p>{product.averageRating * 20}%</p>
-                      <p>💘 {product.likes.length}</p>
+                      {/* Sizes */}
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {product.sizes.map((size) => (
+                          <span
+                            key={size}
+                            className="border px-2 py-1 rounded text-xs"
+                          >
+                            {size}
+                          </span>
+                        ))}
+                      </div>
+
                       <Typography
+                        className=" flex flex-row-reverse"
                         variant="caption"
-                        color="gray"
                         mt={1}
-                        display="block"
+                        sx={{ color: DARK_MODE.Accent, fontSize: 16 }}
                       >
                         Added:{" "}
                         {new Date(product.createdAt).toLocaleDateString()}

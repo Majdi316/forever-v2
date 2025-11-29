@@ -27,3 +27,6 @@ h1 {
 .appBarLogo span {
   color: red;
 }
+.letterSpacing{
+  letter-spacing: 1.5px;
+}
