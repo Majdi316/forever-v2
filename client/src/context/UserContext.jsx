@@ -156,7 +156,11 @@ const UserContextProvider = (props) => {
       for (const item in cartItems[items]) {
         try {
           if (cartItems[items][item] > 0) {
-            totalAmount += itemInfo.price * cartItems[items][item];
+            if (userFullDetails.isSubscribe) {
+              totalAmount += itemInfo.price * cartItems[items][item] * 0.8;
+            }else{
+               totalAmount += itemInfo.price * cartItems[items][item];
+            }
           }
           // eslint-disable-next-line no-unused-vars, no-empty
         } catch (error) {}

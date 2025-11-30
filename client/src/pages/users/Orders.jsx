@@ -1,18 +1,34 @@
+//TODO Libraries
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+//TODO Context
 import { UserContext } from "../../context/UserContext";
+//TODO Components
 import Title from "../../components/Title";
-
+//TODO MUI Components
+import { Button } from "@mui/material";
+//TODO THEME
+import { DARK_MODE } from "../../theme/themeData";
+//TODO Main Component
 const Orders = () => {
-  // Context
-  const { currency, backendUrl, token } = useContext(UserContext);
+  //TODO Variables
+  const {
+    currency,
+    backendUrl,
+    token,
+    titleTheme,
+    buttonTheme,
+    navigate,
+    paragraphTheme,
+    paperTheme,
+  } = useContext(UserContext);
 
-  // State
+  //TODO State
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Fetch Orders
+  //TODO Functions
   const loadOrderData = async () => {
     try {
       if (!token) return;
@@ -41,12 +57,6 @@ const Orders = () => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    loadOrderData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
-
   // Status colors
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -62,19 +72,27 @@ const Orders = () => {
         return "bg-gray-400";
     }
   };
+  //TODO useEffects
+  useEffect(() => {
+    loadOrderData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
 
-  // UI
+  // TODO Return
   return (
-    <div className="pt-16 pb-20 w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-40 border-t transition-all duration-300">
+    <div className="pt-16 pb-20 w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-40  transition-all duration-300">
       {/* Title */}
-      <div className="mb-8 text-center sm:text-left">
+      <div className="mb-8 text-center sm:text-left text-2xl">
         <Title text1="MY" text2="ORDERS" />
       </div>
 
       {/* Loading */}
       {loading && (
         <div className="flex justify-center py-20">
-          <p className="text-gray-500 text-lg animate-pulse">
+          <p
+            style={{ color: DARK_MODE.Accent }}
+            className="text-lg animate-pulse font-bold"
+          >
             Loading orders...
           </p>
         </div>
@@ -88,18 +106,18 @@ const Orders = () => {
             alt="No orders"
             className="w-32 sm:w-40 opacity-70 mb-6"
           />
-          <h2 className="text-xl sm:text-2xl font-semibold text-gray-700 mb-2">
+          <h2
+            style={titleTheme}
+            className="text-xl sm:text-2xl font-semibold mb-2"
+          >
             You have no orders yet
           </h2>
-          <p className="text-gray-500 mb-6 text-sm sm:text-base">
+          <p style={paragraphTheme} className=" mb-6 text-sm sm:text-base">
             Looks like you haven’t made your first purchase yet.
           </p>
-          <button
-            onClick={() => window.location.assign("/shop")}
-            className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-all text-sm sm:text-base"
-          >
+          <Button style={buttonTheme} onClick={() => navigate(`/collection`)}>
             Start Shopping
-          </button>
+          </Button>
         </div>
       )}
 
@@ -107,8 +125,9 @@ const Orders = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {orderData.map((item, index) => (
           <div
+            style={paperTheme}
             key={index}
-            className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+            className=" rounded-2xl  p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
           >
             {/* Product Info */}
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
@@ -118,10 +137,13 @@ const Orders = () => {
                 className="w-full sm:w-24 h-48 sm:h-24 object-cover rounded-lg border"
               />
               <div className="flex-1">
-                <p className="font-semibold text-gray-800 text-base sm:text-lg">
+                <p
+                  style={titleTheme}
+                  className="font-semibold  text-base sm:text-lg"
+                >
                   {item.name}
                 </p>
-                <div className="flex flex-wrap gap-3 text-sm text-gray-600 mt-2">
+                <div className="flex flex-wrap gap-3 text-sm mt-2">
                   <p>
                     {currency}
                     {item.price}
@@ -129,7 +151,7 @@ const Orders = () => {
                   <p>Qty: {item.quantity}</p>
                   <p>Size: {item.size}</p>
                 </div>
-                <div className="mt-3 text-xs sm:text-sm text-gray-500 space-y-1">
+                <div className="mt-3 text-xs sm:text-sm  space-y-1">
                   <p>
                     <span className="font-medium">Date:</span>{" "}
                     {new Date(item.date).toLocaleDateString()}
@@ -150,16 +172,16 @@ const Orders = () => {
                     item.status
                   )}`}
                 ></span>
-                <p className="text-sm sm:text-base font-medium capitalize text-gray-700">
+                <p
+                  style={titleTheme}
+                  className="text-sm sm:text-base font-medium capitalize "
+                >
                   {item.status}
                 </p>
               </div>
-              <button
-                onClick={loadOrderData}
-                className="border border-gray-300 hover:border-black hover:bg-black hover:text-white text-gray-700 text-sm sm:text-base px-4 py-2 rounded-lg transition-all"
-              >
+              <Button sx={buttonTheme} onClick={loadOrderData}>
                 Track Order
-              </button>
+              </Button>
             </div>
           </div>
         ))}

@@ -1,14 +1,22 @@
+//TODO Libraries
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+//TODO Context
 import { UserContext } from "../../context/UserContext";
+//TODO Assets
 import { assets } from "../../assets/assets";
-
+//TODO Components
+import Title from "../../components/Title";
+//TODO Main Component
 const ManageOrders = () => {
-  const { backendUrl, token, currency } = useContext(UserContext);
+  //TODO Variables
+  const { backendUrl, token, currency, titleTheme, paperTheme } =
+    useContext(UserContext);
+  //TODO States
   const [orders, setOrders] = useState([]);
 
-  // Fetch all orders
+  //TODO Functions
   const fetchAllOrders = async () => {
     if (!token) return;
     try {
@@ -26,8 +34,7 @@ const ManageOrders = () => {
       toast.error(error.message);
     }
   };
-
-  // Handle order status update
+  //---------- Handle order status update
   const statusHandler = async (event, orderId) => {
     try {
       const response = await axios.post(
@@ -45,27 +52,30 @@ const ManageOrders = () => {
       toast.error(error.message);
     }
   };
-
+  //TODO useEffect
   useEffect(() => {
     fetchAllOrders();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
-//TODO Return
+  //TODO Return
   return (
-    <div className="p-4 md:p-8 bg-gray-50 min-h-screen w-full">
-      <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-800">
-        Manage Orders
+    <div className="p-4 md:p-8  min-h-screen w-full">
+      <h2 className="text-2xl md:text-3xl font-semibold mb-6 ">
+        <Title text1={"MANAGE"} text2={"ORDERS"} />
       </h2>
 
       {orders.length === 0 ? (
-        <p className="text-gray-500 text-center mt-10">No orders available.</p>
+        <p style={titleTheme} className=" text-center mt-10">
+          No orders available.
+        </p>
       ) : (
         <div className="flex flex-col gap-6">
           {orders.map((order, index) => (
             <div
+              style={paperTheme}
               key={index}
-              className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 md:p-6 hover:shadow-md transition-all duration-300"
+              className=" rounded-2xl shadow-sm p-5 md:p-6 hover:shadow-md transition-all duration-300"
             >
               {/* Header */}
               <div className="flex flex-col md:flex-row md:items-center justify-between border-b pb-4 mb-4">
@@ -76,10 +86,10 @@ const ManageOrders = () => {
                     className="w-10 h-10"
                   />
                   <div>
-                    <h3 className="font-semibold text-gray-800">
+                    <h3 style={titleTheme} className="font-semibold ">
                       Order #{order._id.slice(-6)}
                     </h3>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm ">
                       {new Date(order.date).toLocaleString()}
                     </p>
                   </div>
@@ -94,7 +104,7 @@ const ManageOrders = () => {
                   >
                     {order.payment ? "Paid" : "Pending"}
                   </span>
-                  <span className="text-sm font-medium text-gray-600">
+                  <span className="text-sm font-medium ">
                     {order.paymentMethod}
                   </span>
                 </div>
@@ -104,8 +114,10 @@ const ManageOrders = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Items */}
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">Items</h4>
-                  <ul className="text-sm text-gray-600 space-y-1">
+                  <h4 style={titleTheme} className="font-semibold  mb-2">
+                    Items
+                  </h4>
+                  <ul className="text-sm  space-y-1">
                     {order.items.map((item, i) => (
                       <li key={i}>
                         {item.name} × {item.quantity}{" "}
@@ -117,41 +129,40 @@ const ManageOrders = () => {
 
                 {/* Address */}
                 <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">Address</h4>
-                  <p className="text-sm text-gray-700">
+                  <h4 style={titleTheme} className="font-semibold  mb-2">
+                    Address
+                  </h4>
+                  <p className="text-sm ">
                     {order.address.firstName} {order.address.lastName}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm ">
                     {order.address.street}, {order.address.city},{" "}
                     {order.address.state}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm ">
                     {order.address.country}, {order.address.zipcode}
                   </p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    📞 {order.address.phone}
-                  </p>
+                  <p className="text-sm  mt-1">📞 {order.address.phone}</p>
                 </div>
 
                 {/* Summary + Status */}
                 <div className="flex flex-col justify-between">
                   <div>
-                    <p className="font-semibold text-gray-800 mb-1">
+                    <p style={titleTheme} className="font-semibold  mb-1">
                       Total:{" "}
                       <span className="text-blue-600">
                         {currency}
                         {order.amount}
                       </span>
                     </p>
-                    <p className="text-sm text-gray-600">
-                      Items: {order.items.length}
-                    </p>
+                    <p className="text-sm ">Items: {order.items.length}</p>
                   </div>
 
                   <div className="mt-4 md:mt-0">
                     <label
+                      style={titleTheme}
                       htmlFor={`status-${order._id}`}
-                      className="text-sm font-medium text-gray-700 mr-2"
+                      className="text-sm font-medium  mr-2"
                     >
                       Status:
                     </label>
@@ -159,7 +170,7 @@ const ManageOrders = () => {
                       id={`status-${order._id}`}
                       onChange={(e) => statusHandler(e, order._id)}
                       value={order.status}
-                      className="p-2 rounded-md border border-gray-300 text-sm font-medium text-gray-800 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all"
+                      className="p-2 rounded-md border border-gray-300 text-sm font-medium focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all"
                     >
                       <option value="Order Placed">Order Placed</option>
                       <option value="Packing">Packing</option>

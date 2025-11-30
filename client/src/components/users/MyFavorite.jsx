@@ -21,7 +21,7 @@ const MyFavorite = ({ data }) => {
   //TODO Variables
   const { buttonTheme, titleTheme, navigate, paperTheme, theme } =
     useContext(UserContext);
-  //TODO Return if not have reviews
+  //TODO Return if not have products
   if (!data?.products?.length) {
     return (
       <div className="w-full max-w-5xl mt-6 text-center bg-white rounded-xl shadow p-6">

@@ -1,4 +1,6 @@
-import React from "react";
+//TODO Libraries
+import { useContext } from "react";
+//TODO MUI Components
 import {
   Card,
   CardContent,
@@ -6,17 +8,19 @@ import {
   Rating,
   Chip,
   Button,
-  Box,
 } from "@mui/material";
-
-import { useContext } from "react";
+//TODO Context
 import { UserContext } from "../../context/UserContext";
-import Title from "../Title";
+//TODO Theme
 import { DARK_MODE, LIGHT_MODE } from "../../theme/themeData";
+//TODO Components
+import Title from "../Title";
+//TODO Main Components
 const MyProducts = ({ data }) => {
+  //TODO Variables
   const { buttonTheme, titleTheme, navigate, paperTheme, theme } =
     useContext(UserContext);
-
+  //TODO Return if not have products
   if (!data?.products?.length) {
     return (
       <div className="w-full max-w-5xl mt-6 text-center bg-white rounded-xl shadow p-6">
@@ -26,6 +30,7 @@ const MyProducts = ({ data }) => {
       </div>
     );
   }
+  //TODO Return
   return (
     <div className="w-full max-w-5xl mt-8">
       <div className=" text-2xl">

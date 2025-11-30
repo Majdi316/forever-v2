@@ -1,10 +1,19 @@
+//TODO Libraries
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
+//TODO Context
 import { UserContext } from "../../context/UserContext";
+//TODO Assets
 import { assets } from "../../assets/assets";
+//TODO Components
 import Title from "../../components/Title";
 import CartTotal from "../../components/users/CartTotal";
+//TODO MUI Components
+import { Button, TextField } from "@mui/material";
+//TODO Theme
+import { customTextFieldStyles } from "../../helper/styeTextInput";
+import { DARK_MODE, LIGHT_MODE } from "../../theme/themeData";
 //TODO Main Function
 const PlaceOrder = () => {
   //TODO Variables
@@ -17,6 +26,9 @@ const PlaceOrder = () => {
     token,
     backendUrl,
     getCartAmount,
+    theme,
+    paragraphTheme,
+    buttonTheme,
   } = useContext(UserContext);
   //TODO State
   const [method, setMethod] = useState("cod");
@@ -37,7 +49,7 @@ const PlaceOrder = () => {
     const value = event.target.value;
     setFormData((data) => ({ ...data, [name]: value }));
   };
-
+  //---------------------------------------------
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
@@ -105,7 +117,7 @@ const PlaceOrder = () => {
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t"
+      className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh]"
     >
       {/* --------------Left Side ----------------- */}
       <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
@@ -113,96 +125,112 @@ const PlaceOrder = () => {
           <Title text1={"DELIVERY"} text2={"INFORMATION"} />
         </div>
         <div className="flex gap-3">
-          <input
+          <TextField
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
             required
             onChange={onChangeHandler}
             name="firstName"
             value={formData.firstName}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="First name"
+            label="First name"
+            variant="outlined"
+            fullWidth
           />
-          <input
+          <TextField
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
             required
             onChange={onChangeHandler}
             name="lastName"
             value={formData.lastName}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="Last name"
+            label="Last name"
+            variant="outlined"
+            fullWidth
           />
         </div>
-        <input
+        <TextField
+          sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
           required
           onChange={onChangeHandler}
           name="email"
           value={formData.email}
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="email"
-          placeholder="Email address"
+          label="Email address"
+          variant="outlined"
+          fullWidth
         />
-        <input
+        <TextField
+          sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
           required
           onChange={onChangeHandler}
           name="street"
           value={formData.street}
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="text"
-          placeholder="Street"
+          label="Street"
+          variant="outlined"
+          fullWidth
         />
         <div className="flex gap-3">
-          <input
+          <TextField
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
             required
             onChange={onChangeHandler}
             name="city"
             value={formData.city}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="City"
+            label="City"
+            variant="outlined"
+            fullWidth
           />
-          <input
-            required
+          <TextField
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
             onChange={onChangeHandler}
             name="state"
             value={formData.state}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="State"
+            label="State"
+            variant="outlined"
+            fullWidth
           />
         </div>
         <div className="flex gap-3">
-          <input
-            required
+          <TextField
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
             onChange={onChangeHandler}
             name="zipcode"
             value={formData.zipcode}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="number"
-            placeholder="ZipCode"
+            label="ZipCode"
+            variant="outlined"
+            fullWidth
           />
-          <input
+          <TextField
+            sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
             required
             onChange={onChangeHandler}
             name="country"
             value={formData.country}
-            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
             type="text"
-            placeholder="Country"
+            label="Country"
+            variant="outlined"
+            fullWidth
           />
         </div>
-        <input
+        <TextField
+          sx={customTextFieldStyles(theme, LIGHT_MODE, DARK_MODE)}
           required
           onChange={onChangeHandler}
           name="phone"
           value={formData.phone}
-          className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="number"
-          placeholder="Phone"
+          label="Phone"
+          variant="outlined"
+          fullWidth
         />
       </div>
       {/* ------------Right Side------------- */}
-      <div className="mt-8">
-        <div className="mt-8 min-w-80">
+      <div className="mt-12 ml-2 sm:ml-10">
+        <div style={paragraphTheme} className="mt-8 min-w-80">
           <CartTotal />
         </div>
         <div className="mt-12">
@@ -220,7 +248,7 @@ const PlaceOrder = () => {
               ></p>
               <img className="mx-4 h-5" src={assets.stripe_logo} alt="" />
             </div>
-           
+
             <div
               onClick={() => setMethod("cod")}
               className="flex items-center gap-3 border p-2 px-3 cursor-pointer"
@@ -236,12 +264,9 @@ const PlaceOrder = () => {
             </div>
           </div>
           <div className="w-full mt-8 text-end">
-            <button
-              type="submit"
-              className="bg-black text-white text-sm px-16 py-3"
-            >
+            <Button sx={{ ...buttonTheme, width: "100%" }} type="submit">
               PLACE ORDER
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,22 +1,32 @@
 //TODO Libraries
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+//TODO MUI Components
+import { Button } from "@mui/material";
+//TODO MUI Icons
+import DeleteIcon from "@mui/icons-material/Delete";
 //TODO Context
 import { UserContext } from "../../context/UserContext";
 //TODO Components
 import Title from "../../components/Title";
 import CartTotal from "../../components/users/CartTotal";
-//TODO Assets
-import { assets } from "../../assets/assets";
-
 //TODO Main Function
 const Cart = () => {
- //TODO Variables 
-  const { products, currency, cartItems, updateQuantity, navigate } =
-    useContext(UserContext);
-//TODO State
+  //TODO Variables
+  const {
+    products,
+    currency,
+    cartItems,
+    updateQuantity,
+    navigate,
+    titleTheme,
+    buttonTheme,
+    paperTheme,
+    userFullDetails,
+  } = useContext(UserContext);
+  //TODO State
   const [cartData, setCartData] = useState([]);
- //TODO Effects
+  //TODO Effects
   useEffect(() => {
     const tempData = Object.entries(cartItems).flatMap(([productId, sizes]) =>
       Object.entries(sizes)
@@ -33,21 +43,18 @@ const Cart = () => {
   // Empty cart UI
   if (!cartData.length) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[70vh] px-4">
+      <div className="flex flex-col w-full items-center justify-center min-h-[70vh] px-4">
         <img
           src="https://cdn-icons-png.flaticon.com/512/2038/2038854.png"
           alt="Empty Cart"
           className="w-60 mb-6 opacity-80"
         />
-        <h2 className="text-2xl font-semibold text-gray-700 mb-3">
+        <h2 style={titleTheme} className="text-2xl font-semibold mb-3">
           Your cart is empty
         </h2>
-        <button
-          onClick={() => navigate("/collection")}
-          className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-all"
-        >
+        <Button sx={buttonTheme} onClick={() => navigate("/collection")}>
           Continue Shopping
-        </button>
+        </Button>
       </div>
     );
   }
@@ -56,7 +63,7 @@ const Cart = () => {
   return (
     <div className="pt-14 w-full px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-40 pb-20">
       {/* Header */}
-      <div className="mb-6">
+      <div className="mb-6 text-2xl">
         <Title text1="YOUR" text2="CART" />
       </div>
 
@@ -70,8 +77,9 @@ const Cart = () => {
 
           return (
             <div
+              style={paperTheme}
               key={index}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border border-gray-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all"
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all"
             >
               {/* Product Info */}
               <div className="flex items-start gap-5">
@@ -81,15 +89,29 @@ const Cart = () => {
                   alt={productData.name}
                 />
                 <div>
-                  <p className="text-base font-semibold text-gray-800">
+                  <p style={titleTheme} className="text-base font-semibold ">
                     {productData.name}
                   </p>
                   <div className="flex items-center mt-2 gap-3 text-sm text-gray-600">
-                    <p>
-                      {currency}
-                      {productData.price}
-                    </p>
-                    <span className="px-3 py-1 border rounded-md bg-slate-50">
+                    {userFullDetails ? (
+                      <div className="flex items-center gap-2">
+                        <span className="line-through">
+                          {currency}
+                          {productData.price}
+                        </span>
+                        <span className="text-green-600 dark:text-green-400 font-bold text-lg">
+                          {currency}
+                          {productData.price * 0.8}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className=" font-bold text-lg">
+                        {currency}
+                        {productData.price}
+                      </span>
+                    )}
+
+                    <span className="px-3 py-1 border rounded-md ">
                       Size: {item.size}
                     </span>
                   </div>
@@ -110,29 +132,30 @@ const Cart = () => {
                   }}
                   className="border w-16 text-center rounded-lg py-1 focus:outline-none focus:ring-2 focus:ring-black transition-all"
                 />
-                <img
-                  onClick={() => updateQuantity(item._id, item.size, 0)}
-                  src={assets.bin_icon}
-                  alt="Remove item"
-                  className="w-5 h-5 cursor-pointer opacity-70 hover:opacity-100 transition"
-                />
+                <span onClick={() => updateQuantity(item._id, item.size, 0)}>
+                  <DeleteIcon
+                    sx={{ color: "red", cursor: "pointer", fontSize: "30px" }}
+                  />
+                </span>
               </div>
             </div>
           );
         })}
       </div>
-
       {/* Cart Total */}
       <div className="flex justify-end mt-16">
-        <div className="w-full sm:w-[400px] bg-gray-50 rounded-2xl p-6 shadow-md">
+        <div
+          style={paperTheme}
+          className="w-full sm:w-[400px] rounded-2xl p-6 shadow-md"
+        >
           <CartTotal />
           <div className="text-end mt-8">
-            <button
+            <Button
+              sx={{ ...buttonTheme, width: "100%" }}
               onClick={() => navigate("/user/place-order")}
-              className="bg-black text-white text-sm px-8 py-3 rounded-lg hover:bg-gray-800 transition-all"
             >
               PROCEED TO CHECKOUT
-            </button>
+            </Button>
           </div>
         </div>
       </div>
