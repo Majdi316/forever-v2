@@ -149,7 +149,6 @@ const updateUserController = async (req, res) => {
       user: updatedUser,
     });
   } catch (error) {
-    console.error(error);
     res.status(500).json({
       success: false,
       message: "Server error while updating user",

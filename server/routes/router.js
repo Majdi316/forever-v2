@@ -10,6 +10,7 @@ import reviewRouter from "./reviewRoute.js";
 import employeeRouter from "./employeeRoute.js";
 import contactRouter from "./contactRoute.js";
 import usersRouter from "./userRoute.js";
+import managerRouter from "./managerRoute.js";
 
 //create router
 const router = express.Router();
@@ -23,6 +24,7 @@ router.use("/order", orderRouter);
 router.use("/reviews", reviewRouter);
 router.use("/employee", employeeRouter);
 router.use("/contacts", contactRouter);
+router.use("/manager", managerRouter);
 
 router.use((req, res) => {
   res.status(404).send("Page Not Found");

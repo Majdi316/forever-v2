@@ -16,6 +16,7 @@ const ManageOrders = () => {
   //TODO States
   const [orders, setOrders] = useState([]);
 
+
   //TODO Functions
   const fetchAllOrders = async () => {
     if (!token) return;
@@ -57,7 +58,7 @@ const ManageOrders = () => {
     fetchAllOrders();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
-
+console.log(orders)
   //TODO Return
   return (
     <div className="p-4 md:p-8  min-h-screen w-full">

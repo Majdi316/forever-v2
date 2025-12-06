@@ -1,13 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import UpdateHero from "../../components/manager/UpdateHero";
+import EarningCharts from "../../components/manager/EarningCharts";
+import HeroView from "../../components/manager/HeroView";
+import ViewTotal from "../../components/manager/ViewTotal";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   return (
-    <>
-      <UpdateHero />
-      <button onClick={() => navigate("/manager/manage-orders")}>Orders</button>
-    </>
+    <div className=" w-full h-full">
+      <ViewTotal />
+      <HeroView />
+      <EarningCharts />
+    </div>
   );
 };
 
