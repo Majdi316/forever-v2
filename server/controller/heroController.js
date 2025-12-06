@@ -101,14 +101,14 @@ const updateHeroController = async (req, res) => {
         message: "Only Admin Can Create A New Hero",
       });
     }
-    //!--------validate user before creation-------------
+    //!--------validate hero before creation-------------
     const { error } = validateUpdateHero(newHero);
     if (error) {
       throw new Error(`Validation failed: ${error.details[0].message}`);
     }
     const updatedHero = await Hero.findByIdAndUpdate(heroId, newHero, {
       new: true,
-    });
+    }); 
     return res.status(200).json({
       success: true,
       message: "Hero section updated successfully !!",

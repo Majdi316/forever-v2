@@ -3,11 +3,12 @@ import { useContext } from "react";
 //TODO Components
 import NewsLetterBox from "../components/NewsLetterBox";
 import Title from "../components/Title";
+import ContactViews from "../components/users/ContactViews";
 //TODO Theme
 import { DARK_MODE, LIGHT_MODE } from "../theme/themeData";
 //TODO Context
 import { UserContext } from "../context/UserContext";
-
+//TODO Main Function
 const ContactUs = () => {
   //TODO Variables
   const { theme } = useContext(UserContext);
@@ -105,6 +106,7 @@ const ContactUs = () => {
 
       {/* Newsletter Section */}
       <NewsLetterBox />
+      <ContactViews />
     </div>
   );
 };

@@ -9,6 +9,7 @@ import {
   Typography,
   Chip,
   Divider,
+  Button,
 } from "@mui/material";
 //TODO Context
 import { UserContext } from "../../context/UserContext";
@@ -32,8 +33,16 @@ const Profile = () => {
   const [myProducts, setMyProducts] = useState(null);
   //TODO Variables
   const limit = 3;
-  const { backendUrl, token, user, theme, titleTheme, paragraphTheme } =
-    useContext(UserContext);
+  const {
+    backendUrl,
+    token,
+    user,
+    theme,
+    titleTheme,
+    paragraphTheme,
+    navigate,
+    buttonTheme,
+  } = useContext(UserContext);
   //TODO Functions
   //--------------------------------------
   const fetchMyProducts = async () => {
@@ -49,7 +58,7 @@ const Profile = () => {
       if (res.data.success) {
         setMyProducts(res.data);
       }
-    // eslint-disable-next-line no-unused-vars, no-empty
+      // eslint-disable-next-line no-unused-vars, no-empty
     } catch (error) {
     } finally {
       setLoading(false);
@@ -170,11 +179,20 @@ const Profile = () => {
               className="!w-32 !h-32 shadow-lg"
             />
             {/* ===== Full Name ===== */}
-            <div className="text-center md:text-left">
-              <Typography sx={titleTheme} variant="h5" className="font-bold">
-                {myInfo?.name?.first} {myInfo?.name?.middle}{" "}
-                {myInfo?.name?.last}
-              </Typography>
+            <div className="text-center md:text-left w-full">
+              <div className=" flex flex-col sm:flex-row items-center justify-between">
+                <Typography sx={titleTheme} variant="h5" className="font-bold">
+                  {myInfo?.name?.first} {myInfo?.name?.middle}{" "}
+                  {myInfo?.name?.last}
+                </Typography>
+                <Button
+                  sx={buttonTheme}
+                  onClick={() => navigate(`/users/profile/update/${user._id}`)}
+                >
+                  UPDATE
+                </Button>
+              </div>
+
               {/* ===== email ===== */}
               <Typography sx={paragraphTheme}>{myInfo?.email}</Typography>
               {/* ===== states ===== */}

@@ -7,8 +7,10 @@ import { toast } from "react-toastify";
 import { UserContext } from "../context/UserContext";
 //TODO Assets
 import { assets } from "../assets/assets";
-import DeleteIcon from "@mui/icons-material/Delete";
+//TODO MUI Components
 import Button from "@mui/material/Button";
+//TODO MUI Icons
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Reviews = () => {
   //TODO Variables

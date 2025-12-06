@@ -64,6 +64,9 @@ const UserContextProvider = (props) => {
     transition: "color 0.3s ease",
   };
   //TODO ------------- Function ----------------------
+  const updateSubscription = (isSubscribe) => {
+    setUserFullDetails((prev) => ({ ...prev, isSubscribe }));
+  };
   //!----------------- Cart ----------------------
   //---------- Add to Cart -----------
   const addToCart = async (productId, size) => {
@@ -158,8 +161,8 @@ const UserContextProvider = (props) => {
           if (cartItems[items][item] > 0) {
             if (userFullDetails.isSubscribe) {
               totalAmount += itemInfo.price * cartItems[items][item] * 0.8;
-            }else{
-               totalAmount += itemInfo.price * cartItems[items][item];
+            } else {
+              totalAmount += itemInfo.price * cartItems[items][item];
             }
           }
           // eslint-disable-next-line no-unused-vars, no-empty
@@ -336,6 +339,7 @@ const UserContextProvider = (props) => {
     getCartCount,
     getCartAmount,
     toggleProductLikeInContext,
+    updateSubscription,
   };
   //TODO ------------- Return ----------------------
   return (

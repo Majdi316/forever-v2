@@ -15,18 +15,17 @@ import {
 import { verifyToken } from "../middleware/verifyToken.js";
 
 // Create the router
-const usersRouter = express.Router();
+const usersAuthRouter = express.Router();
 
 // Routes
 //todo --------------------- GET ----------------------------
-usersRouter.get("/test", testServer);
-usersRouter.get("/check-auth", verifyToken, checkAuthController);
+usersAuthRouter.get("/test", testServer);
+usersAuthRouter.get("/check-auth", verifyToken, checkAuthController);
 //todo --------------------- POST ----------------------------
-usersRouter.post("/signup", createNewUserController);
-usersRouter.post("/verify-email", verifyEmailController);
-usersRouter.post("/login", loginController);
-usersRouter.post("/logout", logoutController);
-usersRouter.post("/forgot-password", forgotPasswordController);
-usersRouter.post("/reset-password/:token", resetPasswordController);
-
-export default usersRouter;
+usersAuthRouter.post("/signup", createNewUserController);
+usersAuthRouter.post("/verify-email", verifyEmailController);
+usersAuthRouter.post("/login", loginController);
+usersAuthRouter.post("/logout", logoutController);
+usersAuthRouter.post("/forgot-password", forgotPasswordController);
+usersAuthRouter.post("/reset-password/:token", resetPasswordController);
+export default usersAuthRouter;

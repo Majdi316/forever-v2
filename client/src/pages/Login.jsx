@@ -25,7 +25,7 @@ const Login = () => {
     try {
       const response = await axios.post(backendUrl + "/api/auth/login", data);
       if (response.data.success) {
-        toast.success(response.data.message); 
+        toast.success(response.data.message);
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
       } else {
@@ -46,6 +46,7 @@ const Login = () => {
   //TODO useEffect
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (token) {
       navigate("/");
     }
@@ -170,7 +171,7 @@ const Login = () => {
           </p>
         </div>
       </motion.div>
-    </div> 
+    </div>
   );
 };
 

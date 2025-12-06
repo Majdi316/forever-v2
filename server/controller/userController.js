@@ -1,5 +1,15 @@
 import { User } from "../models/User.js";
 import { getUserByIdService } from "../services/users/userService.js";
+const allowedUpdates = [
+  "name",
+  "phone",
+  "email",
+  "age",
+  "gender",
+  "image",
+  "address",
+  "password",
+];
 /**-------------------------------------------------
  * @desc  Get User By Id
  * @route  /users/:id
@@ -33,7 +43,7 @@ const getUserByIdController = async (req, res) => {
  * @method  Get
  * @access private (manager , user himself/herself)
  ---------------------------------------------------*/
-//todo------------------ get user by id --------------------------
+//todo------------------ get user data by id --------------------------
 const getUserDataController = async (req, res) => {
   try {
     const { id: userId } = req.params;
@@ -65,5 +75,91 @@ const getUserDataController = async (req, res) => {
     });
   }
 };
+/**-------------------------------------------------
+ * @desc  Toggle subscription status
+ * @route  /users/subscribe
+ * @method  PUT
+ * @access private (Only Registered user)
+ ---------------------------------------------------*/
 
-export { getUserByIdController, getUserDataController };
+const toggleSubscribeController = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    //!check if user is exist
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    //! Toggle the subscription
+    user.isSubscribe = !user.isSubscribe;
+    await user.save();
+
+    res.status(200).json({
+      message: user.isSubscribe
+        ? "Subscribed successfully!"
+        : "Unsubscribed successfully!",
+      isSubscribe: user.isSubscribe,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+/**-------------------------------------------------
+ * @desc    Update User Details
+ * @route   /users/update/:id
+ * @method  PUT
+ * @access  Private (Same user)
+ --------------------------------------------------*/
+const updateUserController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userFromToken = req.user;
+
+    if (userFromToken._id !== id) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied",
+      });
+    }
+
+    const updates = {};
+    Object.keys(req.body).forEach((key) => {
+      if (allowedUpdates.includes(key)) {
+        updates[key] = req.body[key];
+      }
+    });
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $set: updates },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      user: updatedUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error while updating user",
+    });
+  }
+};
+
+export {
+  getUserByIdController,
+  getUserDataController,
+  toggleSubscribeController,
+  updateUserController,
+};

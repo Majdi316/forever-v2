@@ -9,4 +9,4 @@ git remote add origin https://github.com/Majdi316/forever-v2.git
 git push -u origin main
 
 
-https://chatgpt.com/share/691e15fe-6350-8001-8c29-822256e4d101
+https://chatgpt.com/c/6931d5a9-e3bc-8331-be99-16d24bfccf5c

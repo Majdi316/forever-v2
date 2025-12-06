@@ -1,22 +1,62 @@
+//TODO Libraries
 import { useContext, useEffect, useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
+import { toast } from "react-toastify";
+import axios from "axios";
+//TODO Context
 import { UserContext } from "../context/UserContext";
+//TODO Theme
 import { DARK_MODE, LIGHT_MODE } from "../theme/themeData";
-
+//TODO Main Component
 const NewsLetterBox = () => {
-  const { theme, userFullDetails, user } = useContext(UserContext);
+  //TODO Variables
+  const {
+    theme,
+    userFullDetails,
+    user,
+    backendUrl,
+    token,
+    updateSubscription,
+  } = useContext(UserContext);
+  //TODO States
   const [userDetails, setUser] = useState({});
   const [showConfetti, setShowConfetti] = useState(false);
+  //TODO Functions
+  const handleSubscribe = async () => {
+    if (!user) return;
 
+    try {
+      const { data } = await axios.put(
+        `${backendUrl}/api/users/subscribe`,
+        {},
+        {
+          headers: { "x-auth-token": token },
+        }
+      );
+
+      setUser((prev) => ({ ...prev, isSubscribe: data.isSubscribe }));
+      updateSubscription(data.isSubscribe); // Update global context
+      if (data.isSubscribe) {
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 5000);
+        toast.success(data.message);
+      } else {
+        toast.info(data.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    }
+  };
+  //TODO useEffects
   useEffect(() => {
     setUser(userFullDetails);
 
-    // Trigger confetti if subscribed
+    //! Trigger confetti if subscribed
     if (userFullDetails?.isSubscribe) {
       setShowConfetti(true);
-      // Stop confetti after 5 seconds
+      //! Stop confetti after 5 seconds
       const timer = setTimeout(() => setShowConfetti(false), 5000);
       return () => clearTimeout(timer);
     }
@@ -72,26 +112,12 @@ const NewsLetterBox = () => {
             </motion.p>
           ) : (
             <motion.button
-              type="submit"
+              type="button"
+              onClick={handleSubscribe}
               style={{ background: DARK_MODE.Accent }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="
-              text-white 
-              font-semibold 
-              text-sm sm:text-base 
-              px-6 sm:px-10 
-              py-3 sm:py-4 
-              rounded-lg 
-              shadow-md 
-              hover:shadow-lg 
-              transition 
-              duration-300 
-              ease-in-out 
-              focus:outline-none 
-              focus:ring-2 
-              focus:ring-offset-1 focus:ring-blue-400 cursor-pointer
-            "
+              className="text-white font-semibold text-sm sm:text-base px-6 sm:px-10 py-3 sm:py-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-400 cursor-pointer"
             >
               SUBSCRIBE
             </motion.button>

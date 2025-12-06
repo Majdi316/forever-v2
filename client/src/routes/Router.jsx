@@ -26,6 +26,7 @@ import AddProduct from "../pages/employees/AddProduct";
 import UpdateProduct from "../components/employee/UpdateProduct";
 import EmployeeProducts from "../pages/employees/EmployeeProducts";
 import FavoriteProducts from "../pages/users/FavoriteProducts";
+import UpdateProfile from "../components/users/UpdateProfile";
 //TODO Main Function
 const Router = () => {
   //TODO Return
@@ -49,6 +50,7 @@ const Router = () => {
       <Route path={ROUTES.verify} element={<Verify />} />
       <Route path={ROUTES.orders} element={<Orders />} />
       <Route path={ROUTES.favorite} element={<FavoriteProducts />} />
+      <Route path={ROUTES.updateProfile} element={<UpdateProfile />} />
       {/* ----------- EMPLOYEES ROUTES ------------  */}
       <Route path={ROUTES.addNewProduct} element={<AddProduct />} />
       <Route path={ROUTES.updateProduct} element={<UpdateProduct />} />

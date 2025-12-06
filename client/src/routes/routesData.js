@@ -16,7 +16,8 @@ const ROUTES = {
   placeOrder: "/user/place-order",
   verify: "/verify",
   orders: "/user/my-orders",
-  favorite:"user/my-favorite/products",
+  favorite: "user/my-favorite/products",
+  updateProfile: "/users/profile/update/:id",
   // ------------- employees routes ----------
   addNewProduct: "/employees/add-new-product",
   updateProduct: "/employee/update-product/:id",

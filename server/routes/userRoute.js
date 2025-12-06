@@ -4,30 +4,46 @@ import express from "express";
 import {
   getUserByIdController,
   getUserDataController,
+  toggleSubscribeController,
+  updateUserController,
 } from "../controller/userController.js";
 import { verifyAuthToken } from "../auth/verifyAuthToken.js";
 import { updateUserActivity } from "../middleware/updateActivity.js";
 import { getMyReviewsController } from "../controller/userReviewsController.js";
+import { validateUpdateUser } from "../middleware/validateUpdateUser.js";
 
-const usersAuthRouter = express.Router();
+const usersRouter = express.Router();
 //TODO-------------------- GET ----------------------------
-usersAuthRouter.get(
+usersRouter.get(
   "/profile/:id",
   verifyAuthToken,
   updateUserActivity,
   getUserDataController
 );
-usersAuthRouter.get(
+usersRouter.get(
   "/my-reviews/:id/reviews",
   verifyAuthToken,
   updateUserActivity,
   getMyReviewsController
 );
-usersAuthRouter.get(
+usersRouter.get(
   "/:id",
   verifyAuthToken,
   updateUserActivity,
   getUserByIdController
 );
-
-export default usersAuthRouter;
+//TODO-------------------- PUT ----------------------------
+usersRouter.put(
+  "/subscribe",
+  verifyAuthToken,
+  updateUserActivity,
+  toggleSubscribeController
+);
+usersRouter.put(
+  "/update/:id",
+  verifyAuthToken,
+  updateUserActivity,
+  validateUpdateUser,
+  updateUserController
+);
+export default usersRouter;
