@@ -12,6 +12,8 @@ import {
   getMonthlyOrdersCount,
   getTopProducts,
 } from "../controller/manager/earningController.js";
+import { getTopActiveUsers } from "../controller/manager/usersController.js";
+import { getUsersWithStats } from "../controller/manager/getAllUsersController.js";
 
 // Create the router
 const managerRouter = express.Router();
@@ -22,6 +24,7 @@ managerRouter.get(
   updateUserActivity,
   getTotalDataController
 );
+//!----------------- EARNING ENDPOINTS ------------------------
 managerRouter.get(
   "/earnings/monthly",
   verifyAuthToken,
@@ -40,10 +43,19 @@ managerRouter.get(
   updateUserActivity,
   getTopProducts
 );
+managerRouter.get("/earnings/kpi", verifyAuthToken, updateUserActivity, getKPI);
+//!----------------- USERS ENDPOINTS ------------------------
 managerRouter.get(
-  "/earnings/kpi",
+  "/top-active-users",
   verifyAuthToken,
   updateUserActivity,
-  getKPI
+  getTopActiveUsers
 );
+managerRouter.get(
+  "/all-users",
+  verifyAuthToken,
+  updateUserActivity,
+  getUsersWithStats
+);
+
 export default managerRouter;

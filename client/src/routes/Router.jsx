@@ -27,6 +27,7 @@ import UpdateProduct from "../components/employee/UpdateProduct";
 import EmployeeProducts from "../pages/employees/EmployeeProducts";
 import FavoriteProducts from "../pages/users/FavoriteProducts";
 import UpdateProfile from "../components/users/UpdateProfile";
+import AdminUsersTable from "../components/manager/AdminUsersTable";
 //TODO Main Function
 const Router = () => {
   //TODO Return
@@ -60,6 +61,7 @@ const Router = () => {
       <Route path={ROUTES.updateHeroSection} element={<UpdateHeroForm />} />
       <Route path={ROUTES.createHeroSection} element={<CreateHero />} />
       <Route path={ROUTES.manageOrders} element={<ManageOrders />} />
+      <Route path={ROUTES.allUsers} element={<AdminUsersTable />} />
     </Routes>
   );
 };

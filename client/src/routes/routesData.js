@@ -27,5 +27,6 @@ const ROUTES = {
   createHeroSection: "/manager/create-hero-section",
   updateHeroSection: "/manager/update-hero-section/:id",
   manageOrders: "/manager/manage-orders",
+  allUsers: "/manager/all-users",
 };
 export default ROUTES;

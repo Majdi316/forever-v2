@@ -23,7 +23,7 @@ import { UserContext } from "../../context/UserContext";
 //TODO Main Component
 const ViewTotal = () => {
   //TODO Variables
-  const { backendUrl, token, titleTheme, paperTheme, paragraphTheme } =
+  const { backendUrl, token, titleTheme, paperTheme, paragraphTheme,navigate } =
     useContext(UserContext);
   //TODO States
   const [stats, setStats] = useState({
@@ -69,21 +69,25 @@ const ViewTotal = () => {
   //TODO Global Variable
   const statCards = [
     {
+      url:`/`,
       label: "Products",
       value: stats.totalProducts,
       icon: <InventoryIcon className="text-blue-500" fontSize="large" />,
     },
     {
+      url:`/manager/all-users`,
       label: "Users",
       value: stats.totalUsers,
       icon: <PeopleAltIcon className="text-green-500" fontSize="large" />,
     },
     {
+      url:`/`,
       label: "Reviews",
       value: stats.totalReviews,
       icon: <ReviewsIcon className="text-purple-500" fontSize="large" />,
     },
     {
+      url:`/`,
       label: "Contacts",
       value: stats.totalContact,
       icon: <ContactSupportIcon className="text-orange-500" fontSize="large" />,
@@ -92,6 +96,7 @@ const ViewTotal = () => {
       label: "Orders",
       value: stats.totalOrders,
       icon: <ShoppingCartIcon className="text-red-500" fontSize="large" />,
+      url:`/manager/manage-orders`
     },
   ];
   //TODO Return
@@ -110,7 +115,7 @@ const ViewTotal = () => {
       ) : (
         <div className=" w-full flex flex-col sm:flex-row gap-5">
           {statCards.map((item, index) => (
-            <div onClick={() => {}} className=" w-full" key={index}>
+            <div onClick={() => navigate(item.url)} className=" w-full" key={index}>
               <Card
                 sx={paperTheme}
                 key={index}

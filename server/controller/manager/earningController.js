@@ -125,10 +125,10 @@ export const getTopProducts = async (req, res) => {
           createdAt: { $gte: start, $lte: end },
         },
       },
-      { $unwind: "$items" }, // Flatten the items array
+      { $unwind: "$items" }, 
       {
         $group: {
-          _id: "$items.name", // Assuming each item has a 'name' field
+          _id: "$items.name", 
           totalQuantity: { $sum: "$items.quantity" },
         },
       },

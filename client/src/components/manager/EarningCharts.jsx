@@ -65,7 +65,7 @@ const EarningCharts = () => {
       <main className="flex-1 p-6" ref={dashboardRef}>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <Typography style={titleTheme} variant="h4" className="font-bold">
-            Manager Analytics Dashboard
+           📊 Manager Analytics Dashboard
           </Typography>
           <div className="flex gap-3 flex-wrap">
             <TextField
