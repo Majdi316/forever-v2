@@ -14,7 +14,7 @@ import Stat from "./Stat";
 //TODO Main Component
 export default function AdminUsersTable() {
   //TODO Variables
-  const { backendUrl, token, titleTheme, paperTheme, theme } =
+  const { backendUrl, token, titleTheme, paperTheme, theme, navigate } =
     useContext(UserContext);
   //TODO States
   const [users, setUsers] = useState([]);
@@ -24,13 +24,10 @@ export default function AdminUsersTable() {
   const fetchUsers = async (p = 1) => {
     setLoading(true);
     try {
-      const { data } = await axios.get(
-        `${backendUrl}/api/manager/all-users?limit=3`,
-        {
-          params: { page: p, limit: 8, search },
-          headers: { "x-auth-token": token },
-        }
-      );
+      const { data } = await axios.get(`${backendUrl}/api/manager/all-users`, {
+        params: { page: p, limit: 100, search },
+        headers: { "x-auth-token": token },
+      });
 
       setUsers(data.users);
     } catch (err) {
@@ -75,7 +72,9 @@ export default function AdminUsersTable() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {users.map((user) => (
             <div
-              onClick={() => {}}
+              onClick={() => {
+                navigate(`/manager/user-details/${user._id}`);
+              }}
               style={paperTheme}
               key={user._id}
               className="rounded-xl shadow p-4 hover:shadow-lg hover:scale-105 transition cursor-pointer"

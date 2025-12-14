@@ -12,8 +12,15 @@ import {
   getMonthlyOrdersCount,
   getTopProducts,
 } from "../controller/manager/earningController.js";
-import { getTopActiveUsers } from "../controller/manager/usersController.js";
+import {
+  getTopActiveUsers,
+  updateUserStatus,
+} from "../controller/manager/usersController.js";
 import { getUsersWithStats } from "../controller/manager/getAllUsersController.js";
+import {
+  answerMessage,
+  getUserMessages,
+} from "../controller/manager/messagesController.js";
 
 // Create the router
 const managerRouter = express.Router();
@@ -57,5 +64,23 @@ managerRouter.get(
   updateUserActivity,
   getUsersWithStats
 );
-
+managerRouter.get(
+  "/users/:userId/messages",
+  verifyAuthToken,
+  updateUserActivity,
+  getUserMessages
+);
+//todo --------------------- PUT ----------------------------
+managerRouter.put(
+  "/update-status/:userId",
+  verifyAuthToken,
+  updateUserActivity,
+  updateUserStatus
+);
+managerRouter.put(
+  "/messages/:contactId/answer",
+  verifyAuthToken,
+  updateUserActivity,
+  answerMessage
+);
 export default managerRouter;
