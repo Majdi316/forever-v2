@@ -28,6 +28,8 @@ const ROUTES = {
   updateHeroSection: "/manager/update-hero-section/:id",
   manageOrders: "/manager/manage-orders",
   allUsers: "/manager/all-users",
-  userDetails:"/manager/user-details/:id"
+  userDetails: "/manager/user-details/:id",
+  productsForEmployee: "/manager/employee-details/product/:id/:first/:last",
+  reviewsForUser: "/manager/users-details/reviews/:id/:first/:last",
 };
 export default ROUTES;

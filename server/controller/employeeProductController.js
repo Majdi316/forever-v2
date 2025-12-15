@@ -11,7 +11,7 @@ import { Review } from "../models/Review.js";
 const getProductsByEmployee = async (req, res) => {
   const { id } = req.params;
 
-  try {
+  try { 
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;

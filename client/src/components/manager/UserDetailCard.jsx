@@ -1,6 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+//TODO Libraries
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { toast } from "react-toastify";
+import moment from "moment";
+//TODO MUI Components
 import {
   Card,
   CardContent,
@@ -12,16 +18,15 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { useContext } from "react";
+//TODO Context
 import { UserContext } from "../../context/UserContext";
-import { toast } from "react-toastify";
+//TODO Components
 import Info from "./Info";
-import moment from "moment";
 import UserStatusCard from "./UserStatusCard";
 import UserMessages from "./UserMessages";
-
+//TODO Main Component
 const UserDetailCard = () => {
+  //TODO Variables
   const { id: userId } = useParams();
   const {
     backendUrl,
@@ -32,21 +37,23 @@ const UserDetailCard = () => {
     buttonTheme,
     theme,
   } = useContext(UserContext);
+  //TODO States
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
-
+  //TODO useEffect
   useEffect(() => {
     const fetchUser = async () => {
       setLoading(true);
       try {
+        //! fetch all users and details
         const { data } = await axios.get(
           `${backendUrl}/api/manager/all-users`,
           {
             headers: { "x-auth-token": token },
           }
         );
-
+        //! select user by id
         const selectedUser = data.users.find((u) => u._id === userId);
         if (selectedUser) {
           setUser(selectedUser);
@@ -62,6 +69,8 @@ const UserDetailCard = () => {
     fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+  //TODO Functions
+  //!-------------------- HANDLE UPDATE FUNCTION -------------
   const handleUpdate = async () => {
     setUpdating(true);
     try {
@@ -82,12 +91,14 @@ const UserDetailCard = () => {
       setUpdating(false);
     }
   };
+  //TODO Loader
   if (loading)
     return (
       <div className="flex justify-center mt-20">
         <CircularProgress />
       </div>
     );
+  //TODO Return
   return (
     <div className=" w-full">
       <div className="max-w-6xl mx-auto p-4">

@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 //TODO Context
 import { UserContext } from "../../context/UserContext";
 //TODO MUI Components
@@ -17,11 +18,10 @@ import {
   Rating,
 } from "@mui/material";
 //TODO Components
-import ProductSkeleton from "../../components/employee/ProductSkeleton";
-import BlurIn from "../../components/employee/BlurIn";
-
+import BlurIn from "../employee/BlurIn";
+import ProductSkeleton from "../employee/ProductSkeleton";
 //TODO MAIN COMPONENT
-const EmployeeProducts = () => {
+const ProductsForEmployees = () => {
   //TODO States
   const [myProducts, setMyProducts] = useState([]);
   const [page, setPage] = useState(1);
@@ -31,7 +31,6 @@ const EmployeeProducts = () => {
   //TODO Variables
   const {
     backendUrl,
-    user,
     token,
     navigate,
     paperTheme,
@@ -39,7 +38,9 @@ const EmployeeProducts = () => {
     theme,
     buttonTheme,
   } = useContext(UserContext);
-  const employeeId = user._id;
+  const { id: employeeId } = useParams();
+  const { first: employeeFirstName } = useParams();
+  const { last: employeeLastName } = useParams();
   const limit = 3;
   //TODO Functions
   const fetchProducts = async (pageNumber = 1) => {
@@ -87,7 +88,7 @@ const EmployeeProducts = () => {
         textAlign={{ xs: "center", md: "left" }}
         sx={titleTheme}
       >
-        My Products - {totalProducts}
+        {employeeFirstName} {employeeLastName} Products - {totalProducts}
       </Typography>
 
       {/* Skeleton Loader */}
@@ -104,7 +105,7 @@ const EmployeeProducts = () => {
         <Typography textAlign="center" color="gray" mt={4}>
           No products found.
         </Typography>
-      )} 
+      )}
 
       {/* Products Grid */}
       {!loading && (
@@ -250,4 +251,4 @@ const EmployeeProducts = () => {
   );
 };
 
-export default EmployeeProducts;
+export default ProductsForEmployees;
