@@ -56,6 +56,7 @@ const ReviewsForUser = () => {
       }
       // eslint-disable-next-line no-unused-vars, no-empty
     } catch (error) {
+      console.log(error)
     } finally {
       setLoading(false);
     }

@@ -31,6 +31,9 @@ import AdminUsersTable from "../components/manager/AdminUsersTable";
 import UserDetailCard from "../components/manager/UserDetailCard";
 import ProductsForEmployees from "../components/manager/ProductsForEmployees";
 import ReviewsForUser from "../components/manager/ReviewsForUser";
+import AdminProductsAnalytics from "../pages/manager/AdminProductsAnalytics";
+import ManagerReviews from "../pages/manager/ManagerReviews";
+import ManagerContacts from "../pages/manager/ManagerContacts";
 //TODO Main Function
 const Router = () => {
   //TODO Return
@@ -67,6 +70,13 @@ const Router = () => {
       <Route path={ROUTES.allUsers} element={<AdminUsersTable />} />
       <Route path={ROUTES.userDetails} element={<UserDetailCard />} />
       <Route path={ROUTES.reviewsForUser} element={<ReviewsForUser />} />
+      <Route path={ROUTES.reviewsForUser} element={<ReviewsForUser />} />
+      <Route path={ROUTES.allReviews} element={<ManagerReviews />} />
+      <Route path={ROUTES.allContactsMessages} element={<ManagerContacts />} />
+      <Route
+        path={ROUTES.allProductsAnalytic}
+        element={<AdminProductsAnalytics />}
+      />
       <Route
         path={ROUTES.productsForEmployee}
         element={<ProductsForEmployees />}

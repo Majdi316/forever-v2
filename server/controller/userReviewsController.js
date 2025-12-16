@@ -18,7 +18,7 @@ const getMyReviewsController = async (req, res) => {
     const skip = (page - 1) * limit;
 
     //!---manager and registered user can show user information
-    if (!user.isManger && userId !== user?._id) {
+    if (!user?.isManager && userId !== user?._id) {
       return res.status(403).json({
         success: false,
         message: "Only Manager or registered user can look at user information",

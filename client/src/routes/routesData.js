@@ -24,6 +24,9 @@ const ROUTES = {
   myProducts: "/employee/my-products",
   // ------------- manager routes ----------
   dashboard: "/manager/dashboard",
+  allProductsAnalytic: "/manager/all-products",
+  allContactsMessages: "/manager/all-messages",
+  allReviews: "/manager/all-reviews",
   createHeroSection: "/manager/create-hero-section",
   updateHeroSection: "/manager/update-hero-section/:id",
   manageOrders: "/manager/manage-orders",

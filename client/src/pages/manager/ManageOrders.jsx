@@ -53,6 +53,7 @@ const ManageOrders = () => {
       toast.error(error.message);
     }
   };
+  console.log(orders)
   //TODO useEffect
   useEffect(() => {
     fetchAllOrders();
