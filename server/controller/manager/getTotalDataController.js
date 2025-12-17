@@ -3,6 +3,7 @@ import Order from "../../models/Order.js";
 import Product from "../../models/Product.js";
 import { Review } from "../../models/Review.js";
 import { User } from "../../models/User.js";
+
 /**-------------------------------------------------
  * @desc    Get Total Data
  * @route   /manager/total-data
@@ -12,18 +13,41 @@ import { User } from "../../models/User.js";
 const getTotalDataController = async (req, res) => {
   try {
     const registeredUser = req.user;
-    //! only manager can view this data
+
     if (!registeredUser.isManager) {
       return res.status(403).json({
         success: false,
         message: "Access denied",
       });
     }
-    const totalProducts = await Product.countDocuments();
-    const totalUsers = await User.countDocuments();
-    const totalReviews = await Review.countDocuments();
-    const totalContact = await Contact.countDocuments();
-    const totalOrders = await Order.countDocuments();
+
+    const [
+      totalProducts,
+      totalUsers,
+      totalReviews,
+      totalContact,
+      totalOrders,
+      totalEarningResult,
+    ] = await Promise.all([
+      Product.countDocuments(),
+      User.countDocuments(),
+      Review.countDocuments(),
+      Contact.countDocuments(),
+      Order.countDocuments(),
+
+      // 💰 Total Earnings (ALL Orders)
+      Order.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalEarning: { $sum: "$amount" },
+          },
+        },
+      ]),
+    ]);
+
+    const totalEarning =
+      totalEarningResult.length > 0 ? totalEarningResult[0].totalEarning : 0;
 
     res.status(200).json({
       success: true,
@@ -33,11 +57,12 @@ const getTotalDataController = async (req, res) => {
       totalReviews,
       totalContact,
       totalOrders,
+      totalEarning,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Server error" + error.message,
+      message: "Server error: " + error.message,
     });
   }
 };

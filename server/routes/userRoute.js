@@ -2,6 +2,7 @@
 import express from "express";
 //TODO Import Function
 import {
+  deleteUser,
   getUserByIdController,
   getUserDataController,
   toggleSubscribeController,
@@ -46,4 +47,6 @@ usersRouter.put(
   validateUpdateUser,
   updateUserController
 );
+//TODO-------------------- DELETE ----------------------------
+usersRouter.delete("/:id", verifyAuthToken, updateUserActivity, deleteUser);
 export default usersRouter;

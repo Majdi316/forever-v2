@@ -41,12 +41,12 @@ export const getAllReviewsForManager = async (req, res) => {
       { $unwind: { path: "$product", preserveNullAndEmptyArrays: true } },
     ];
 
-    // Rating filter
+    //! Rating filter
     if (rating) {
       pipeline.push({ $match: { rating: Number(rating) } });
     }
 
-    // User filter
+    //! User filter
     if (user) {
       pipeline.push({
         $match: {
@@ -58,7 +58,7 @@ export const getAllReviewsForManager = async (req, res) => {
         },
       });
     }
-    // Duplicate pipeline for counting total
+    //! Duplicate pipeline for counting total
     const countPipeline = [...pipeline, { $count: "total" }];
     const countResult = await Review.aggregate(countPipeline);
     const total = countResult[0]?.total || 0;

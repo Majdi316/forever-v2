@@ -155,10 +155,37 @@ const updateUserController = async (req, res) => {
     });
   }
 };
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const requester = req.user;
 
+    //! Check if requester is the same user or a manager
+    if (requester._id !== id && !requester.isManager) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this account" });
+    }
+
+    //! Delete user
+    const deletedUser = await User.findByIdAndDelete(id);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "User account deleted successfully", deletedUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
 export {
   getUserByIdController,
   getUserDataController,
   toggleSubscribeController,
   updateUserController,
+  deleteUser,
 };

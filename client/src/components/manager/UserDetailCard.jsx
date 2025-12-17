@@ -36,6 +36,7 @@ const UserDetailCard = () => {
     paperTheme,
     buttonTheme,
     theme,
+    navigate,
   } = useContext(UserContext);
   //TODO States
   const [user, setUser] = useState(null);
@@ -70,6 +71,19 @@ const UserDetailCard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
   //TODO Functions
+  //!-------------------- DELETE USER FUNCTION -------------
+  const deleteUser = async (id) => {
+    try {
+      //! fetch all users and details
+      const { data } = await axios.delete(`${backendUrl}/api/users/${id}`, {
+        headers: { "x-auth-token": token },
+      });
+      toast.success(data.message);
+    } catch (err) {
+      // eslint-disable-next-line no-empty
+    } finally {
+    }
+  };
   //!-------------------- HANDLE UPDATE FUNCTION -------------
   const handleUpdate = async () => {
     setUpdating(true);
@@ -136,13 +150,19 @@ const UserDetailCard = () => {
                 <Typography style={titleTheme} variant="h5" fontWeight="bold">
                   {user?.name?.first} {user?.name?.middle} {user?.name?.last}
                 </Typography>
-                <Button
-                  variant="contained"
-                  color="error"
-                  sx={{ fontWeight: "bold" }}
-                >
-                  DELETE
-                </Button>
+                {user.isManager ? null : (
+                  <Button
+                    onClick={() => {
+                      deleteUser(user?._id);
+                      navigate(`/manager/dashboard`);
+                    }}
+                    variant="contained"
+                    color="error"
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    DELETE
+                  </Button>
+                )}
               </div>
 
               <Typography style={paragraphTheme}>{user?.email}</Typography>

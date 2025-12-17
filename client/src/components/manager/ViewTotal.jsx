@@ -12,9 +12,11 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 // TODO Context
 import { UserContext } from "../../context/UserContext";
+import { data } from "react-router-dom";
 //TODO Main Component
 const ViewTotal = () => {
   //TODO Variables
@@ -33,6 +35,7 @@ const ViewTotal = () => {
     totalReviews: 0,
     totalContact: 0,
     totalOrders: 0,
+    // totalEarningResult: 0,
   });
 
   const [loading, setLoading] = useState(false);
@@ -52,6 +55,7 @@ const ViewTotal = () => {
           totalReviews: data.totalReviews,
           totalContact: data.totalContact,
           totalOrders: data.totalOrders,
+          totalEarningResult: data.totalEarning,
         });
       }
     } catch (error) {
@@ -62,6 +66,7 @@ const ViewTotal = () => {
       setLoading(false);
     }
   };
+  console.log(data);
   //TODO useEffect
   useEffect(() => {
     fetchTotalData();
@@ -98,6 +103,12 @@ const ViewTotal = () => {
       value: stats.totalOrders,
       icon: <ShoppingCartIcon className="text-red-500" fontSize="large" />,
       url: `/manager/manage-orders`,
+    },
+    {
+      url: `#`,
+      label: "Earning",
+      value: `${stats.totalEarningResult}`,
+      icon: <AttachMoneyIcon className="text-green-500" fontSize="large" />,
     },
   ];
   //TODO Return

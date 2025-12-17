@@ -1,0 +1,19 @@
+
+ *************************************** 
+ ID : 	 a7df07cf36870ec2987d9b5505667119 
+ Time :  	 [2025/12/17 19:01:34] 
+ Method :  	 POST 
+ Path :  	 /api/auth/login 
+ Status :  	 400 
+ Delay :  	 582.747 ms 
+ Status Message :  	 Bad Request 
+ User Agent :  	 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0
+ *************************************** 
+ ID : 	 edc7151384992b17b698644b43b3fd1f 
+ Time :  	 [2025/12/17 19:03:16] 
+ Method :  	 PUT 
+ Path :  	 /api/manager/update-status/690f6a597c8aa1c742caad0e 
+ Status :  	 403 
+ Delay :  	 273.252 ms 
+ Status Message :  	 Forbidden 
+ User Agent :  	 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0
