@@ -17,3 +17,12 @@
  Delay :  	 273.252 ms 
  Status Message :  	 Forbidden 
  User Agent :  	 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0
+ *************************************** 
+ ID : 	 f339fe145885375126251d6f55b95b01 
+ Time :  	 [2025/12/17 21:17:26] 
+ Method :  	 PUT 
+ Path :  	 /api/manager/update-status/690f6a597c8aa1c742caad0e 
+ Status :  	 403 
+ Delay :  	 268.495 ms 
+ Status Message :  	 Forbidden 
+ User Agent :  	 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0
