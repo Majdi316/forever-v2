@@ -17,7 +17,7 @@ const UserStatusCard = ({ user }) => {
         className="rounded-2xl w-full flex items-center justify-center flex-col p-5"
       >
         <p style={titleTheme}>messages</p>
-        <p>{user?.contacts.total}</p>
+        <p>{user?.contacts?.total}</p>
       </div>
       <div
         style={paperTheme}
