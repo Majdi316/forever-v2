@@ -53,4 +53,4 @@ Full system administrators.
 - Modular and scalable architecture
 - Centralized management dashboard
 - Optimized for large product catalogs
-..
+
