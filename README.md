@@ -53,3 +53,7 @@ Full system administrators.
 - Modular and scalable architecture
 - Centralized management dashboard
 - Optimized for large product catalogs
+
+---
+
+>⚠️ **for more details read the reads me files in client and server folders**
