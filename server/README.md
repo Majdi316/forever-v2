@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # 🛒 Forever-V2 — Backend API
 
 A **scalable Node.js backend** for a modern e-commerce platform, featuring **secure authentication**, **role-based access control**, **email verification**, **payments**, and **advanced admin analytics**.
@@ -230,4 +228,3 @@ npm start
 
 **Majdi Hoseen**  
 Backend Developer
->>>>>>> c2ac7f8fc51cb3d4d5742fb580bb5b74e3fa6497
